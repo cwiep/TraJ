@@ -4,7 +4,6 @@
     <string name="start_text">Start</string>
     <string name="start_with_source_text">Start with source</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_finger_paint">Paint some!</string>
+    <string name="title_activity_main">TraJ</string>
 
 </resources>

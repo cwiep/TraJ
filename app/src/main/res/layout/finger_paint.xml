@@ -22,24 +22,38 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="32dp"
             android:text="0.0"
-            android:layout_gravity="center"
+            android:gravity="center"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:onClick="buttonRaiseTolerance"
+            android:onClick="onRaiseToleranceClicked"
             android:layout_weight="1"
             android:text="Pointdist++" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:onClick="buttonLowerTolerance"
+            android:onClick="onLowerToleranceClicked"
             android:layout_weight="1"
             android:text="Pointdist--" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="onClearButtonClicked"
+            android:layout_weight="1"
+            android:text="Clear" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="onSaveButtonClicked"
+            android:layout_weight="1"
+            android:text="Save" />
     </LinearLayout>
 
 </LinearLayout>

@@ -46,12 +46,12 @@ public class FingerPaint extends Activity {
         mTouchToleranceLabel.setText("" + mWritingView.getmTouchTolerance());
 	}
 
-	public void buttonRaiseTolerance(View v) {
+	public void onRaiseToleranceClicked(View v) {
 		mWritingView.raiseTouchTolerance();
         updateTouchToleranceLabel();
 	}
 
-	public void buttonLowerTolerance(View v) {
+	public void onLowerToleranceClicked(View v) {
 		mWritingView.lowerTouchTolerance();
         updateTouchToleranceLabel();
 	}
@@ -62,17 +62,18 @@ public class FingerPaint extends Activity {
         }
     }
 
-	private static final int ERASE_MENU_ID = Menu.FIRST;
-	private static final int SAVE_MENU_ID = Menu.FIRST + 1;
+    public void onClearButtonClicked(View v) {
+        mWritingView.clearCanvas();
+    }
+
+    public void onSaveButtonClicked(View v) {
+        savePointListToFile(mWritingView.getPointList());
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-
-		menu.add(0, ERASE_MENU_ID, 0, "Clear").setShortcut('5', 'z');
-		menu.add(0, SAVE_MENU_ID, 0, "Save pointlist").setShortcut('5', 'z');
-
-		return true;
+		return false;
 	}
 
 	@Override
@@ -83,14 +84,6 @@ public class FingerPaint extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case ERASE_MENU_ID:
-			mWritingView.clearCanvas();
-			return true;
-		case SAVE_MENU_ID:
-			savePointListToFile(mWritingView.getPointList());
-			return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -108,7 +101,10 @@ public class FingerPaint extends Activity {
         String filename = "traj_" + ts + ".txt";
         try {
             fw = new FileWriter(folder.getAbsolutePath() + "/" + filename, false);
-            fw.write(pointList.toString());
+            // fw.write("word\n");
+            for(Point p: pointList) {
+                fw.write("" + p.x + " " + p.y + "\n");
+            }
             fw.flush();
             fw.close();
         } catch (IOException e) {
