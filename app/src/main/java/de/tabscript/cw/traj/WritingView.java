@@ -1,11 +1,16 @@
 package de.tabscript.cw.traj;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,10 +28,12 @@ public class WritingView extends View {
     private List<Point> mPointList;
     private float mX, mY;
     private float mTouchTolerance = 7;
+    private Bitmap mBackgroundImage;
 
     public WritingView(Context c, AttributeSet as) {
         super(c, as);
         mPointList = new ArrayList<Point>();
+        mBackgroundImage = BitmapFactory.decodeResource(getResources(), R.drawable.karopapier);
     }
 
     @Override
@@ -47,11 +54,13 @@ public class WritingView extends View {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10);
+        mBackgroundImage = Bitmap.createScaledBitmap(mBackgroundImage, w, h, false);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(0xFFAAAAAA);
+        // canvas.drawColor(0xFFAAAAAA);
+        canvas.drawBitmap(mBackgroundImage, 0, 0, null);
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
         canvas.drawPath(mPath, mPaint);
     }
@@ -76,7 +85,7 @@ public class WritingView extends View {
     }
 
     public void clearCanvas() {
-        mCanvas.drawColor(0xFFAAAAAA);
+        mCanvas.drawBitmap(mBackgroundImage, 0, 0, null);
         mPointList.clear();
         invalidate();
     }
