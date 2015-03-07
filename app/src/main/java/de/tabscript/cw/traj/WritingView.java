@@ -25,14 +25,14 @@ public class WritingView extends View {
     private Path mPath;
     private Paint mBitmapPaint;
     private Paint mPaint;
-    private List<Point> mPointList;
+    private List<PenPoint> mPointList;
     private float mX, mY;
     private float mTouchTolerance = 7;
     private Bitmap mBackgroundImage;
 
     public WritingView(Context c, AttributeSet as) {
         super(c, as);
-        mPointList = new ArrayList<Point>();
+        mPointList = new ArrayList<PenPoint>();
         mBackgroundImage = BitmapFactory.decodeResource(getResources(), R.drawable.karopapier);
     }
 
@@ -80,7 +80,7 @@ public class WritingView extends View {
         return mTouchTolerance;
     }
 
-    public List<Point> getPointList() {
+    public List<PenPoint> getPointList() {
         return mPointList;
     }
 
@@ -97,7 +97,7 @@ public class WritingView extends View {
         mX = x;
         mY = y;
 
-        mPointList.add(new Point((int) x, (int) y));
+        mPointList.add(new PenPoint((int) x, (int) y));
     }
 
     private void touch_move(float x, float y) {
@@ -109,11 +109,12 @@ public class WritingView extends View {
             mX = x;
             mY = y;
 
-            mPointList.add(new Point((int) x, (int) y));
+            mPointList.add(new PenPoint((int) x, (int) y));
         }
     }
 
     private void touch_up() {
+        mPointList.get(mPointList.size()-1).setPenUp(true);
         mPath.lineTo(mX, mY);
         // commit the path to our offscreen
         mCanvas.drawPath(mPath, mPaint);

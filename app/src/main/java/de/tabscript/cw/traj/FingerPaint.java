@@ -110,7 +110,7 @@ public class FingerPaint extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void savePointListToFile(List<Point> pointList) {
+    private void savePointListToFile(List<PenPoint> pointList) {
         File folder = new File(Environment.getExternalStorageDirectory() + "/TraJData");
         if (!folder.exists()) {
             boolean success = folder.mkdir();
@@ -138,8 +138,8 @@ public class FingerPaint extends Activity {
             if (mUsingWords) {
                 fw.write(mWordList.get(mCurrentWordIndex) + "\n");
             }
-            for (Point p : pointList) {
-                fw.write("" + p.x + " " + p.y + "\n");
+            for (PenPoint p : pointList) {
+                fw.write("" + p.x + " " + p.y + " " + (p.isPenUp() ? "1" : "0") + "\n");
             }
             fw.flush();
             fw.close();
