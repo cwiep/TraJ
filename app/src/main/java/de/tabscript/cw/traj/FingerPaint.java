@@ -40,6 +40,7 @@ public class FingerPaint extends Activity {
     private WritingView mWritingView;
     private TextView mTouchToleranceLabel;
     private TextView mCurrentWordView;
+    private TextView mProgressView;
     private ArrayList<String> mWordList;
     private String mListName;
     private int mCurrentWordIndex;
@@ -56,12 +57,14 @@ public class FingerPaint extends Activity {
         mWordList = intent.getStringArrayListExtra("words");
         mListName = intent.getStringExtra("listname");
         if (mWordList != null) {
-            ((Button) findViewById(R.id.save_button)).setText("Save&Next");
             mUsingWords = true;
             mCurrentWordIndex = 0;
             mCurrentWordView = (TextView) findViewById(R.id.current_word_textview);
             mCurrentWordView.setVisibility(View.VISIBLE);
             mCurrentWordView.setText(mWordList.get(mCurrentWordIndex));
+            mProgressView = (TextView) findViewById(R.id.progress_textview);
+            mProgressView.setVisibility(View.VISIBLE);
+            mProgressView.setText("" + (mCurrentWordIndex + 1) + "/" + mWordList.size());
         }
     }
 
@@ -88,7 +91,14 @@ public class FingerPaint extends Activity {
     public void onSaveButtonClicked(View v) {
         savePointListToFile(mWritingView.getPointList());
         if (mUsingWords) {
-            mCurrentWordView.setText(mWordList.get(++mCurrentWordIndex));
+            ++mCurrentWordIndex;
+            if(mCurrentWordIndex < mWordList.size()) {
+                mCurrentWordView.setText(mWordList.get(mCurrentWordIndex));
+                mProgressView.setText("" + (mCurrentWordIndex + 1) + "/" + mWordList.size());
+            } else {
+                Toast.makeText(this, "All done. Congratulations.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
         mWritingView.clearCanvas();
     }

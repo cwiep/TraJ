@@ -27,7 +27,7 @@ public class WritingView extends View {
     private Paint mPaint;
     private List<PenPoint> mPointList;
     private float mX, mY;
-    private float mTouchTolerance = 7;
+    private float mTouchTolerance = 5;
     private Bitmap mBackgroundImage;
 
     public WritingView(Context c, AttributeSet as) {
